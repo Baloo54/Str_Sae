@@ -52,11 +52,6 @@ public class ListeTriee{
         return liste.finliste(p);
     }
 	
-    
-    /**
-     * ajoute un element au bon endroit dans la liste triee
-     * @param chaine element a inserer
-    */
     public void adjlisT(String chaine) {
         int p = liste.tete();
         boolean insere = false;
