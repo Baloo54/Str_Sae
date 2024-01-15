@@ -56,27 +56,6 @@ public class ListeTriee{
     /**
      * ajoute un element au bon endroit dans la liste triee
      * @param chaine element a inserer
-     *fonction adjlisT (l : liste(chaine), c : chaine)
-     *  debut
-     *      p <- tete(l)
-     *      inseré <- faux
-     *      tant que non inséré et non finliste(l, p) faire
-     *          si val(l, p) > c alors
-     *               si p = tete(l) alors
-     *                   adjtlis(l, c)
-     *               sinon
-     *                   adjlis(l, pPre, c)
-     *              fin si
-     *          inséré <- vrai
-     *           sinon
-     *               pPre <- p
-     *               p <- suc(l, p)
-     *           fin si
-     *       fin tq
-     *       si non inseré alors
-     *          adjlis(l, p, c)
-     *   fin si
-     *   fin
     */
     public void adjlisT(String chaine) {
         int p = liste.tete();
@@ -105,8 +84,24 @@ public class ListeTriee{
      * @param chaine l'element a supprimer 
      */
     public void suplisT(String chaine){
-	//A COMPLETER
-	throw (new Error("A compléter"));
+        int p = liste.tete();
+        boolean trouve = false;
+        int pPre = -1;
+        while (!trouve && !liste.finliste(p)) {
+            if (liste.val(p).equals(chaine)) {
+                trouve = true;
+            } else {
+                pPre = p;
+                p = liste.suc(p);
+            }
+        }
+        if (trouve) {
+            if (p == liste.tete()) {
+                liste.tete();
+            } else {
+                liste.suplis(pPre);
+            }
+        }
     }
 		
     public String toString(){
