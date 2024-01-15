@@ -22,8 +22,13 @@ public class ListeChaineePlacesLibres implements Liste {
      * @param taillemax de la liste
      */
     public ListeChaineePlacesLibres(int tMax) {
-	//A COMPLETER
-	throw (new error ("A compléter"));
+        this.teteLibre = 0;
+        this.tete = 0;
+        this.tab = new MaillonChaine[tMax];
+
+        for (int i = 0; i < tMax; i++) {
+            tab[i] = new MaillonChaine(null, -1);
+        }
     }
 
     /**
@@ -92,8 +97,18 @@ public class ListeChaineePlacesLibres implements Liste {
      * @param p place a liberer
      */
     private void libererPlace(int p) {
-	//A COMPLETER
-	throw (new error ("A compléter"));
+		if (p == tete) {
+			tete = tab[p].getSuc();
+			tab[p] = new MaillonEntier(null, -1);
+		} else {
+			int place = tete;
+			while (tab[place].getSuc() != p) {
+				place = tab[place].getSuc();
+			}
+			tab[place].setSuc(tab[p].getSuc());
+			tab[p] = new MaillonEntier(null, -1);
+		}
+	}
     }
 
     /**
@@ -129,9 +144,13 @@ public class ListeChaineePlacesLibres implements Liste {
      * @return la tete de la liste libre et met a jour la liste libre
      */
     public int retournerPlaceLibre() {
-	//A COMPLETER
-	throw (new error ("A compléter"));
-    }
+        for (int i = 0; i < tab.length; i++) {
+			if (tab[i].getVal() == null && tab[i].getSuc() == -1) {
+				return teteLibre;
+			}
+		}
+		return -1; 
+	}
     
 	
     public String toString()
