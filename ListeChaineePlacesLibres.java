@@ -23,12 +23,13 @@ public class ListeChaineePlacesLibres implements Liste {
      */
     public ListeChaineePlacesLibres(int tMax) {
         this.teteLibre = 0;
-        this.tete = 0;
+        this.tete = -1;
         this.tab = new MaillonChaine[tMax];
-
-        for (int i = 0; i < tMax; i++) {
-            tab[i] = new MaillonChaine(null, -1);
+        // initialisation de la liste libre
+        for (int i = 0; i < tMax- 1; i++) {
+            tab[i] = new MaillonChaine(null, i + 1); // indique le suivant
         }
+        tab[tMax - 1] = new MaillonChaine(null, -1); // indique la fin de liste
     }
 
     /**
@@ -97,18 +98,10 @@ public class ListeChaineePlacesLibres implements Liste {
      * @param p place a liberer
      */
     private void libererPlace(int p) {
-		if (p == tete) {
-			tete = tab[p].getSuc();
-			tab[p] = new MaillonEntier(null, -1);
-		} else {
-			int place = tete;
-			while (tab[place].getSuc() != p) {
-				place = tab[place].getSuc();
-			}
-			tab[place].setSuc(tab[p].getSuc());
-			tab[p] = new MaillonEntier(null, -1);
-		}
-	}
+        // on met a jour la liste libre
+        this.tab[p].setSuc(this.teteLibre);
+        // on met a jour la tete libre
+        this.teteLibre = p;
     }
 
     /**
@@ -144,14 +137,16 @@ public class ListeChaineePlacesLibres implements Liste {
      * @return la tete de la liste libre et met a jour la liste libre
      */
     public int retournerPlaceLibre() {
-        for (int i = 0; i < tab.length; i++) {
-			if (tab[i].getVal() == null && tab[i].getSuc() == -1) {
-				return teteLibre;
-			}
-		}
-		return -1; 
-	}
-    
+        // on verifie qu'il y a une place libre
+        // si la tete libre est -1, il n'y a pas de place libre
+        int newPlace = -1;
+        if (this.teteLibre != -1) {
+            // on recupere la place libre
+            newPlace = this.teteLibre;
+            this.teteLibre = this.tab[this.teteLibre].getSuc();
+        }
+        return newPlace;
+    }
 	
     public String toString()
     {	

@@ -22,8 +22,7 @@ public class ListeTriee{
      * @return tete de liste
      */
     public int tete(){
-	//A COMPLETER
-	throw (new error ("A compléter"));
+        return liste.tete();
     }
 	
     /**
@@ -32,8 +31,7 @@ public class ListeTriee{
      * @return place derriere p dans la liste
      */
     public int suc(int p){
-	//A COMPLETER
-	throw (new error ("A compléter"));
+        return liste.suc(p);
     }
     
     /**
@@ -42,8 +40,7 @@ public class ListeTriee{
      * @return la valeur associee  p
      */
     public String val(int p){
-	//A COMPLETER
-	throw (new error ("A compléter"));
+        return liste.val(p);
     }
  
     /**
@@ -52,18 +49,55 @@ public class ListeTriee{
      * @return vrai si p est a la fin de la liste, faux sinon
      */   
     public boolean finliste(int p){
-	//A COMPLETER
-	throw (new error ("A compléter"));
+        return liste.finliste(p);
     }
 	
     
     /**
      * ajoute un element au bon endroit dans la liste triee
      * @param chaine element a inserer
-     */
-    public void adjlisT(String chaine){
-	//A COMPLETER
-	throw (new error ("A compléter"));
+     *fonction adjlisT (l : liste(chaine), c : chaine)
+     *  debut
+     *      p <- tete(l)
+     *      inseré <- faux
+     *      tant que non inséré et non finliste(l, p) faire
+     *          si val(l, p) > c alors
+     *               si p = tete(l) alors
+     *                   adjtlis(l, c)
+     *               sinon
+     *                   adjlis(l, pPre, c)
+     *              fin si
+     *          inséré <- vrai
+     *           sinon
+     *               pPre <- p
+     *               p <- suc(l, p)
+     *           fin si
+     *       fin tq
+     *       si non inseré alors
+     *          adjlis(l, p, c)
+     *   fin si
+     *   fin
+    */
+    public void adjlisT(String chaine) {
+        int p = liste.tete();
+        boolean insere = false;
+        int pPre = -1;
+        while (!insere && !liste.finliste(p)) {
+            if (liste.val(p).compareTo(chaine) > 0) {
+                if (p == liste.tete()) {
+                    liste.adjtlis(chaine);
+                } else {
+                    liste.adjlis(pPre, chaine);
+                }
+                insere = true;
+            } else {
+                pPre = p;
+                p = liste.suc(p);
+            }
+        }
+        if (!insere) {
+            liste.adjlis(pPre, chaine);
+        }
     }
 	
     /**
@@ -72,7 +106,7 @@ public class ListeTriee{
      */
     public void suplisT(String chaine){
 	//A COMPLETER
-	throw (new error ("A compléter"));
+	throw (new Error("A compléter"));
     }
 		
     public String toString(){
