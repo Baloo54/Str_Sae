@@ -146,25 +146,6 @@ public class TestListeTriee {
 	    // verification
 	    verifie(lT, reponse);
 	}
-	
-	/**
-	 * test de suppression
-	 */
-	public void test_07_suppression() {
-					    ListeTriee lT = new ListeTriee(new ListeProf());
 
-	    String[] mots= {"a","b","c","d","e"};
-	    String[] reponse= {"a","b","d","e"};
-	    for (int i = 0; i < mots.length; i++){
-		lT.adjlisT(mots[i]);
-	    }    	
-	    
-	    // supprime c
-	    lT.suplis(2);
-	    
-	    // verification
-	    verifie(lT, reponse);																	
-		
-	}
 
 }

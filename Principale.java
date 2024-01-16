@@ -55,5 +55,11 @@ public class Principale{
 	fichier.ouvrirFichier();
 	fichier.ecrireLigne("liste;operation;emplacement;duree");
 	fichier.fermerFichier();
+    
+    ListeTriee l = new ListeTriee(new ListeContigue());
+    l = 
+
     }
 }
+
+
