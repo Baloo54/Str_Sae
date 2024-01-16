@@ -52,11 +52,6 @@ public class ListeTriee{
         return liste.finliste(p);
     }
 	
-    
-    /**
-     * ajoute un element au bon endroit dans la liste triee
-     * @param chaine element a inserer
-    */
     public void adjlisT(String chaine) {
         int p = liste.tete();
         boolean insere = false;
@@ -86,20 +81,12 @@ public class ListeTriee{
     public void suplisT(String chaine){
         int p = liste.tete();
         boolean trouve = false;
-        int pPre = -1;
         while (!trouve && !liste.finliste(p)) {
             if (liste.val(p).equals(chaine)) {
+                liste.suplis(p);
                 trouve = true;
             } else {
-                pPre = p;
                 p = liste.suc(p);
-            }
-        }
-        if (trouve) {
-            if (p == liste.tete()) {
-                liste.tete();
-            } else {
-                liste.suplis(pPre);
             }
         }
     }
