@@ -56,10 +56,98 @@ public class Principale{
 	fichier.ecrireLigne("liste;operation;emplacement;duree");
 	fichier.fermerFichier();
     
-    ListeTriee l = new ListeTriee(new ListeContigue());
-    l = 
+    LectureFichier lf = new LectureFichier("noms10000.txt");
+    ListeChainee lc = new ListeChainee(10000);
+    ListeTriee lt = new ListeTriee(lc);
+    String[] noms = lf.lireFichier();
+    for (int i = 0; i < noms.length; i++) {
+        lt.adjlisT(noms[i]);        
+    }
 
+    // ==========Mesure ListeChainee==========
+    // 1)
+    //Debut chronometre
+    long date_debut = System.nanoTime();
+    
+    //Action à mesurer
+    for (int i = 0; i < ELEMENTS_DE_DEBUT.length; i++) {
+        lt.adjlisT(ELEMENTS_DE_DEBUT[i]);
+    }
+    //Fin chronometre
+    long date_fin = System.nanoTime();
+    long duree = date_fin - date_debut;
+
+    // 2)
+    //Debut chronometre
+    long date_debut2 = System.nanoTime();
+
+    //Action à mesurer
+    for (int i = 0; i < ELEMENTS_DE_FIN.length; i++) {
+        lt.adjlisT(ELEMENTS_DE_FIN[i]);
+    }
+    //Fin chronometre
+
+
+    // ==========Mesure ListeChaineePlaceLibres==========
+    //1)
+    ListeChaineePlacesLibres l2 = new ListeChaineePlacesLibres(10000);
+    ListeTriee lt2 = new ListeTriee(l2);
+    for (int i = 0; i < noms.length; i++) {
+        lt2.adjlisT(noms[i]);        
+    }
+    //Debut chronometre
+    long date_debut3 = System.nanoTime();
+
+    //Action à mesurer
+    for (int i = 0; i < ELEMENTS_DE_DEBUT.length; i++) {
+        lt2.adjlisT(ELEMENTS_DE_DEBUT[i]);
+    }
+    //Fin chronometre
+    long date_fin3 = System.nanoTime();
+
+    //2)
+    //Debut chronometre
+    long date_debut4 = System.nanoTime();
+
+    //Action à mesurer
+    for (int i = 0; i < ELEMENTS_DE_FIN.length; i++) {
+        lt2.adjlisT(ELEMENTS_DE_FIN[i]);
+    }
+    //Fin chronometre
+    long date_fin4 = System.nanoTime();
+
+    // ==========Mesure ListeContigues==========
+    //1)
+    ListeContigue l3 = new ListeContigue(10000);
+    ListeTriee lt3 = new ListeTriee(l3);
+    for (int i = 0; i < noms.length; i++) {
+        lt3.adjlisT(noms[i]);        
+    }
+    //Debut chronometre
+    long date_debut5 = System.nanoTime();
+
+    //Action à mesurer
+    for (int i = 0; i < ELEMENTS_DE_DEBUT.length; i++) {
+        lt3.adjlisT(ELEMENTS_DE_DEBUT[i]);
+    }
+    //Fin chronometre
+    long date_fin5 = System.nanoTime();
+
+    //2)
+    //Debut chronometre
+    long date_debut6 = System.nanoTime();
+
+    //Action à mesurer
+    for (int i = 0; i < ELEMENTS_DE_FIN.length; i++) {
+        lt3.adjlisT(ELEMENTS_DE_FIN[i]);
+    }
+    //Fin chronometre
+    long date_fin6 = System.nanoTime();
     }
 }
 
 
+//Q9) La methode cherche si l'element existe dans la liste.
+// Si l'élément n'est pas trouvé, la boucle se terminera normalement sans effectuer de suppression.
+// Ce qui prends le plus de temps c'est le parcours et non la suppression. cela prendra donc autant de temps si l'element existe ou non.
+//
