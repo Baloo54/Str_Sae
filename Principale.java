@@ -54,95 +54,62 @@ public class Principale{
 	EcritureFichier fichier = new EcritureFichier("resultats.csv");
 	fichier.ouvrirFichier();
 	fichier.ecrireLigne("liste;operation;emplacement;duree");
-	fichier.fermerFichier();
-    
+
     LectureFichier lf = new LectureFichier("noms10000.txt");
-    ListeChainee lc = new ListeChainee(10000);
-    ListeTriee lt = new ListeTriee(lc);
     String[] noms = lf.lireFichier();
-    for (int i = 0; i < noms.length; i++) {
-        lt.adjlisT(noms[i]);        
+
+    String[] type = {"ListeChainee", "ListeChaineePlacesLibres", "ListeContigue"};
+    String[] operation = {"ajout", "suppression"};
+    String[] emplacement = {"debut", "fin"};
+
+    long duree[] = new long[12];
+
+    for(int h = 0; h < 100; h++ ){
+        ListeChainee lc = new ListeChainee(10022);
+        ListeChaineePlacesLibres l2 = new ListeChaineePlacesLibres(10022);
+        ListeContigue l3 = new ListeContigue(10022);
+
+        ListeTriee[] listes = {new ListeTriee(lc), new ListeTriee(l2), new ListeTriee(l3)};
+        // ajouter les noms dans les listes
+        for (int i = 0; i < listes.length; i++) {
+            for (int j = 0; j < noms.length; j++) {
+                listes[i].adjlisT(noms[j]);        
+            }
+        }
+        
+        // tester les listes en ajoutant et supprimant des nomsœ
+        for (int i = 0; i < 12; i++) {
+            // ==========Mesure ListeChainee==========Mesure ListeChaineePlaceLibres==========Mesure ListeContigues==========
+            int X = i < 6 ? i%3 : (i-6)%3;
+            int Y = i < 6 ? 0 : 1;
+            int Z = i%6 < 3 ? 0 : 1;
+            // si i < 6 alors ajouter sinon supprimer
+            // si i est pair alors element de debut sinon element de fin
+            // 1)
+            //Debut chronometre
+            long date_debut = System.nanoTime();
+            //Action à mesurer
+            for (int j = 0; j < ELEMENTS_DE_DEBUT.length; j++) {            
+                if(Z == 0){
+                    if ((Y == 0)) listes[X].adjlisT(ELEMENTS_DE_DEBUT[j]);
+                    else listes[X].suplisT(ELEMENTS_DE_DEBUT[j]);                
+                }else{
+                    if (Y == 0) listes[X].adjlisT(ELEMENTS_DE_FIN[j]);
+                    else listes[X].suplisT(ELEMENTS_DE_FIN[j]);
+                }
+            }
+            //Fin chronometre
+            long date_fin = System.nanoTime();
+            duree[i] += (date_fin - date_debut);
+        }
     }
-
-    // ==========Mesure ListeChainee==========
-    // 1)
-    //Debut chronometre
-    long date_debut = System.nanoTime();
-    
-    //Action à mesurer
-    for (int i = 0; i < ELEMENTS_DE_DEBUT.length; i++) {
-        lt.adjlisT(ELEMENTS_DE_DEBUT[i]);
+    for (int i = 0; i < 12; i++) {
+        int X = i < 6 ? i%3 : (i-6)%3;
+        int Y = i < 6 ? 0 : 1;
+        int Z = i%6 < 3 ? 0 : 1;
+        fichier.ecrireLigne(type[X]+";"+operation[Y]+";"+emplacement[Z]+";"+duree[i]/100);
     }
-    //Fin chronometre
-    long date_fin = System.nanoTime();
-    long duree = date_fin - date_debut;
-
-    // 2)
-    //Debut chronometre
-    long date_debut2 = System.nanoTime();
-
-    //Action à mesurer
-    for (int i = 0; i < ELEMENTS_DE_FIN.length; i++) {
-        lt.adjlisT(ELEMENTS_DE_FIN[i]);
-    }
-    //Fin chronometre
-
-
-    // ==========Mesure ListeChaineePlaceLibres==========
-    //1)
-    ListeChaineePlacesLibres l2 = new ListeChaineePlacesLibres(10000);
-    ListeTriee lt2 = new ListeTriee(l2);
-    for (int i = 0; i < noms.length; i++) {
-        lt2.adjlisT(noms[i]);        
-    }
-    //Debut chronometre
-    long date_debut3 = System.nanoTime();
-
-    //Action à mesurer
-    for (int i = 0; i < ELEMENTS_DE_DEBUT.length; i++) {
-        lt2.adjlisT(ELEMENTS_DE_DEBUT[i]);
-    }
-    //Fin chronometre
-    long date_fin3 = System.nanoTime();
-
-    //2)
-    //Debut chronometre
-    long date_debut4 = System.nanoTime();
-
-    //Action à mesurer
-    for (int i = 0; i < ELEMENTS_DE_FIN.length; i++) {
-        lt2.adjlisT(ELEMENTS_DE_FIN[i]);
-    }
-    //Fin chronometre
-    long date_fin4 = System.nanoTime();
-
-    // ==========Mesure ListeContigues==========
-    //1)
-    ListeContigue l3 = new ListeContigue(10000);
-    ListeTriee lt3 = new ListeTriee(l3);
-    for (int i = 0; i < noms.length; i++) {
-        lt3.adjlisT(noms[i]);        
-    }
-    //Debut chronometre
-    long date_debut5 = System.nanoTime();
-
-    //Action à mesurer
-    for (int i = 0; i < ELEMENTS_DE_DEBUT.length; i++) {
-        lt3.adjlisT(ELEMENTS_DE_DEBUT[i]);
-    }
-    //Fin chronometre
-    long date_fin5 = System.nanoTime();
-
-    //2)
-    //Debut chronometre
-    long date_debut6 = System.nanoTime();
-
-    //Action à mesurer
-    for (int i = 0; i < ELEMENTS_DE_FIN.length; i++) {
-        lt3.adjlisT(ELEMENTS_DE_FIN[i]);
-    }
-    //Fin chronometre
-    long date_fin6 = System.nanoTime();
+    fichier.fermerFichier();
     }
 }
 

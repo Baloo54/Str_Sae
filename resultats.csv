@@ -1,1 +1,13 @@
 liste;operation;emplacement;duree
+ListeChainee;ajout;debut;245856
+ListeChaineePlacesLibres;ajout;debut;274125
+ListeContigue;ajout;debut;292449
+ListeChainee;ajout;fin;1651102
+ListeChaineePlacesLibres;ajout;fin;1694460
+ListeContigue;ajout;fin;1276253
+ListeChainee;suppression;debut;258360
+ListeChaineePlacesLibres;suppression;debut;257278
+ListeContigue;suppression;debut;324078
+ListeChainee;suppression;fin;2182609
+ListeChaineePlacesLibres;suppression;fin;2169209
+ListeContigue;suppression;fin;1357867

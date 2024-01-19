@@ -58,20 +58,16 @@ public class ListeTriee{
         int pPre = -1;
         while (!insere && !liste.finliste(p)) {
             if (liste.val(p).compareTo(chaine) > 0) {
-                if (p == liste.tete()) {
-                    liste.adjtlis(chaine);
-                } else {
-                    liste.adjlis(pPre, chaine);
-                }
+                if (pPre == -1) liste.adjtlis(chaine);
+                else liste.adjlis(pPre, chaine);
                 insere = true;
             } else {
                 pPre = p;
                 p = liste.suc(p);
             }
         }
-        if (!insere) {
-            liste.adjlis(pPre, chaine);
-        }
+        if (pPre == -1 && !insere) liste.adjtlis(chaine);
+        else if (!insere) liste.adjlis(pPre, chaine);
     }
 	
     /**
