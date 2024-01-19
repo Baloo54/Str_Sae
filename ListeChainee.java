@@ -5,7 +5,6 @@
  * 
  * L'entier -1 designe la fin de liste, nil  
  * 
- * Les places libres sont caracterisees par le fait que le successeur vaut -2
  * 
  */
 
@@ -17,6 +16,7 @@ public class ListeChainee implements Liste {
 	 */
 	private int tete;
 	private MaillonChaine[] tab;
+	private int teteLibre;
 	
 
 	/**
@@ -26,15 +26,12 @@ public class ListeChainee implements Liste {
 	public ListeChainee(int tMax) {
 		// cree les tableaux
 		this.tab = new MaillonChaine[tMax];
-				
-		// la liste est vide
 		this.tete = -1;
-		
-		// initialise les cases en creant les objets
-		// successeur a -2
-		for (int i = 0; i < tMax; i++) {
-			this.tab[i]=new MaillonChaine(null, -2);
+		this.teteLibre = 0;
+		for (int i = 0; i < tMax -1; i++) {
+			this.tab[i]=new MaillonChaine(null, i+1);
 		}
+		this.tab[tMax]=new MaillonChaine(null, -1);
 	}
 
 	/**
@@ -103,8 +100,8 @@ public class ListeChainee implements Liste {
 	 * @param p place a liberer
 	 */
 	private void libererPlace(int p) {
-		//fait le lien
-		this.tab[p].setSuc(-2);		
+		this.tab[p].setSuc(this.teteLibre);
+		this.teteLibre = p;
 	}
 
 	/**
@@ -139,14 +136,9 @@ public class ListeChainee implements Liste {
 	 * @return la tete de la liste libre et met a jour la liste libre
 	 */
 	public int retournerPlaceLibre() {
-		int placeCourante = 0;
-		
-		//si la place est libre
-		while (this.tab[placeCourante].getSuc()!=-2)
-		{
-			placeCourante++;
-		}
-		return (placeCourante);
+		int libre = this.teteLibre;
+		this.teteLibre = this.tab[this.teteLibre].getSuc();
+		return libre;
 	}
 	
 
